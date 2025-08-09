@@ -13,6 +13,8 @@ export const resolvers = {
 
   Mutation: {
     sendMessage: async (parent, { input }) => {
+      console.log('sendMessage resolver called with input:', JSON.stringify(input, null, 2));
+      
       const {
         message,
         provider,
@@ -21,15 +23,26 @@ export const resolvers = {
         conversationHistory = []
       } = input;
 
+      console.log('Extracted parameters:', { 
+        message: message?.substring(0, 50) + '...',
+        provider, 
+        model,
+        apiKeyLength: apiKey?.length,
+        historyLength: conversationHistory?.length 
+      });
+
       if (!message || !message.trim()) {
+        console.error('Message validation failed: empty message');
         throw new Error('Message cannot be empty');
       }
 
       if (!apiKey || !apiKey.trim()) {
+        console.error('API Key validation failed: empty API key');
         throw new Error('API Key is required');
       }
 
       try {
+        console.log('Calling aiProviderService.sendMessage...');
         const result = await aiProviderService.sendMessage(
           provider,
           message,
@@ -37,10 +50,12 @@ export const resolvers = {
           model,
           conversationHistory
         );
+        console.log('aiProviderService.sendMessage result:', result);
 
         return result;
       } catch (error) {
         console.error('Error in sendMessage resolver:', error);
+        console.error('Error stack:', error.stack);
         return {
           id: `error-${Date.now()}`,
           content: '',

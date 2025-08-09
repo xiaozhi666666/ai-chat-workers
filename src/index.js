@@ -1,11 +1,16 @@
-import { createYoga } from 'graphql-yoga';
-import { schema } from './schema.js';
+import { createYoga, createSchema } from 'graphql-yoga';
+import { typeDefs } from './schema.js';
 import { resolvers } from './resolvers.js';
+
+// 创建 GraphQL schema
+const schema = createSchema({
+  typeDefs,
+  resolvers
+});
 
 // 创建 GraphQL Yoga 实例
 const yoga = createYoga({
   schema,
-  resolvers,
   cors: false, // 禁用GraphQL Yoga的CORS，手动处理
   graphiql: {
     title: 'AI Chat API',
@@ -71,7 +76,15 @@ export default {
 
     // 处理 GraphQL 请求
     try {
+      console.log('Processing GraphQL request:', {
+        method: request.method,
+        url: request.url,
+        headers: Object.fromEntries(request.headers.entries())
+      });
+      
       const response = await yoga(request, contextValue);
+      
+      console.log('GraphQL response status:', response.status);
       
       // 添加 CORS 头
       const corsHeaders = {
@@ -93,10 +106,12 @@ export default {
       return newResponse;
     } catch (error) {
       console.error('Worker error:', error);
+      console.error('Error stack:', error.stack);
       
       return new Response(JSON.stringify({
         errors: [{
           message: error.message,
+          stack: error.stack,
           timestamp: new Date().toISOString()
         }]
       }), {

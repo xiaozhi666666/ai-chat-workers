@@ -1,5 +1,3 @@
-import { buildSchema } from 'graphql';
-
 export const typeDefs = `
   enum AIProvider {
     OPENAI
@@ -48,5 +46,3 @@ export const typeDefs = `
     messageStream(input: ChatRequest!): ChatResponse!
   }
 `;
-
-export const schema = buildSchema(typeDefs);
