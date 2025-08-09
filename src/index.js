@@ -6,11 +6,7 @@ import { resolvers } from './resolvers.js';
 const yoga = createYoga({
   schema,
   resolvers,
-  cors: {
-    // origin: ['http://localhost:3001', 'https://*.pages.dev', 'https://*.cloudflare.com'],
-    origin: '*',
-    credentials: false
-  },
+  cors: false, // 禁用GraphQL Yoga的CORS，手动处理
   graphiql: {
     title: 'AI Chat API',
     defaultQuery: `
@@ -53,7 +49,7 @@ export default {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization, Apollo-Require-Preflight',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization, Apollo-Require-Preflight, X-Apollo-Operation-Name, apollo-require-preflight, x-apollo-operation-name, apollographql-client-name, apollographql-client-version',
           'Access-Control-Max-Age': '86400',
         }
       });
@@ -81,7 +77,7 @@ export default {
       const corsHeaders = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, Apollo-Require-Preflight, X-Apollo-Operation-Name, apollo-require-preflight, x-apollo-operation-name, apollographql-client-name, apollographql-client-version',
       };
 
       // 创建新的响应，添加 CORS 头
