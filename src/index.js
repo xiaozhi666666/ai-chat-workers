@@ -7,8 +7,9 @@ const yoga = createYoga({
   schema,
   resolvers,
   cors: {
-    origin: ['http://localhost:3001', 'https://*.pages.dev', 'https://*.cloudflare.com'],
-    credentials: true
+    // origin: ['http://localhost:3001', 'https://*.pages.dev', 'https://*.cloudflare.com'],
+    origin: '*',
+    credentials: false
   },
   graphiql: {
     title: 'AI Chat API',
