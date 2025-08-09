@@ -1,4 +1,4 @@
-name = "ai-chat-api"
+name = "ai-chat-workers"
 main = "src/index.js"
 compatibility_date = "2023-12-01"
 compatibility_flags = ["nodejs_compat"]
