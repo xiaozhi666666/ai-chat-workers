@@ -1,0 +1,14 @@
+name = "ai-chat-api"
+main = "src/index.js"
+compatibility_date = "2023-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+[env.development]
+vars = { ENVIRONMENT = "development" }
+
+# 环境变量（需要在 Cloudflare Dashboard 中设置）
+# OPENAI_API_KEY = "your-openai-key"
+# DEEPSEEK_API_KEY = "your-deepseek-key"
